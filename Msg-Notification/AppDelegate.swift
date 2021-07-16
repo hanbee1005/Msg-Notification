@@ -54,6 +54,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     print("사용자가 알림을 동의하지 않음!!!")
                 }
             }
+        } else {
+            // 알림 설정 확인
+            let setting = application.currentUserNotificationSettings
+            
+            // 알림 설정이 되어 있지 않다면 로컬 알림을 보내도 받을 수 없으므로 종료
+            guard setting?.types != Optional.none else {
+                print("Can't Schedule")
+                return
+            }
+            
+            // 로컬 알림 인스턴스 생성
+            let noti = UILocalNotification()
+            noti.fireDate = Date(timeIntervalSinceNow: 10) // 10초 후 발송
+            noti.timeZone = TimeZone.autoupdatingCurrent  // 현재 위치에 따라 타임존 설정
+            noti.alertBody = "얼른 다시 접속하세요!!!"  // 표시될 메시지
+            noti.alertAction = "학습하기"  // 잠금 상태일 떄 표시될 액션
+            noti.applicationIconBadgeNumber = 1 // 앱 아이콘 모서리에 표시될 배지
+            noti.soundName = UILocalNotificationDefaultSoundName  // 로컬 알림 도착 시 사운드
+            noti.userInfo = ["name": "홍길동"]  // 알림 실행 시 함께 전달하고 싶은 값 (화면에 표시되지 않음)
+            
+            // 생성된 알람 객체를 스케줄러에 등록
+            application.scheduleLocalNotification(noti)
         }
     }
     

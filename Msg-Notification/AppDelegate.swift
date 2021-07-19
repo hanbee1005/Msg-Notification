@@ -32,6 +32,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+        print((notification.userInfo?["name"])!)
+        if application.applicationState == .active {
+            // 앱이 활성화된 상태일 때 실행할 로직
+        } else if application.applicationState == .inactive {
+            // 앱이 비활성화된 상태일 때 실행할 로직
+        }
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         if #available(iOS 10.0, *) {  // UserNotification 프레임워크를 이용한 로컬 알림 (iOS 10 이상)
             // 알림 동의 여부를 확인

@@ -23,6 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // 경고창, 배지, 사운드를 사용하는 알림 환경 정보를 생성하고, 이를 애플리케이션에 저장
             let setting = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(setting)
+            
+            if let localNoti = launchOptions?[UIApplication.LaunchOptionsKey.localNotification] as? UILocalNotification {
+                // 알림으로 인해 앱이 실행된 경우이다. 이때는 알림과 관련된 처리를 해준다.
+                print((localNoti.userInfo?["name"])!)
+            }
         }
         return true
     }
